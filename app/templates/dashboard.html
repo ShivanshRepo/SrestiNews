@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>📋 Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand text-primary fw-bold ms-3" href="/">📰 Sresti.News</a>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end me-3" id="navbarNav">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item"><a class="nav-link" href="/">🏠 होम</a></li>
+        <li class="nav-item"><a class="nav-link" href="/videos">🎥 वीडियो</a></li>
+        <li class="nav-item">
+          <form class="d-flex" action="/search" method="GET">
+            <input class="form-control me-2" type="search" name="q" placeholder="खोजें..." />
+            <button class="btn btn-outline-primary" type="submit">🔍</button>
+          </form>
+        </li>
+        <li class="nav-item">
+  <a class="nav-link text-danger" href="{{ url_for('main.reset_password') }}">🔐 Reset Password</a>
+</li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<!-- Main Container -->
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold">📋 Admin Dashboard</h2>
+      <p class="text-muted mb-0">Welcome, <strong>{{ current_user.username }}</strong></p>
+    </div>
+    <div>
+      <a href="/admin/logout" class="btn btn-outline-danger">🚪 Logout</a>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="mb-3 text-end">
+    <a href="/admin/news/add" class="btn btn-success me-2">➕ Add News</a>
+  </div>
+
+  <!-- Flash Message -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{ messages[0] }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- News Table -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+      <thead class="table-light text-center">
+        <tr>
+          <th scope="col">📰 Title</th>
+          <th scope="col">📂 Category</th>
+          <th scope="col">📅 Date</th>
+          <th scope="col" style="width: 180px;">⚙️ Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for news in news_list %}
+        <tr>
+          <td>{{ news.title }}</td>
+          <td>
+            {% if news.category == 'top' %} टॉप न्यूज़
+            {% elif news.category == 'state' %} राज्य-शहर
+            {% elif news.category == 'national' %} देश
+            {% elif news.category == 'international' %} विदेश
+            {% elif news.category == 'Science&Tech' %} विज्ञान और तकनीक
+            {% elif news.category == 'cricket' %} क्रिकेट
+            {% elif news.category == 'sports' %} स्पोर्ट्स
+            {% elif news.category == 'bollywood' %} बॉलीवुड
+            {% elif news.category == 'education' %} जॉब - एजुकेशन
+            {% elif news.category == 'business' %} बिज़नेस
+            {% elif news.category == 'lifestyle' %} लाइफस्टाइल
+            {% elif news.category == 'spiritual' %} जीवन मंत्र
+            {% else %} {{ news.category }}
+            {% endif %}
+          </td>
+          <td>{{ news.created_at.strftime('%d %B %Y') }}</td>
+          <td class="text-center">
+            <a href="/news/{{ news.id }}" class="btn btn-sm btn-outline-primary me-2">👁 View</a>
+            <a href="/admin/news/delete/{{ news.id }}" class="btn btn-sm btn-outline-danger">🗑 Delete</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4" class="text-center text-muted">🚫 No news articles yet.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Video Section -->
+  <div class="mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="fw-bold">🎥 Uploaded Videos</h4>
+      <a href="{{ url_for('main.add_video') }}" class="btn btn-sm btn-primary">+ Add Video</a>
+    </div>
+
+    <div class="row">
+      {% for video in video_list %}
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title">{{ video.title }}</h6>
+              <div class="ratio ratio-16x9 mb-2">
+                <iframe 
+                  src="https://www.youtube.com/embed/{{ video.youtube_url }}" 
+                  allowfullscreen>
+                </iframe>
+              </div>
+              <a href="{{ url_for('main.delete_video', video_id=video.id) }}" 
+                 class="btn btn-sm btn-outline-danger"
+                 onclick="return confirm('Are you sure you want to delete this video?')">
+                 🗑 Delete
+              </a>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <p class="text-muted">No videos uploaded yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

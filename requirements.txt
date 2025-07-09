@@ -1,0 +1,12 @@
+Flask==2.3.3
+Flask-WTF==1.1.1
+Flask-Login==0.6.3
+Flask-SQLAlchemy==3.1.1
+Werkzeug==2.3.6
+email-validator==2.1.0.post1          # Required by Flask-WTF for EmailField
+WTForms==3.1.1                         # Required for form handling
+
+cloudinary==1.37.0                    # For image uploads
+python-dotenv==1.0.1                  # For managing environment variables
+
+gunicorn==21.2.0                      # If deploying on production (optional)

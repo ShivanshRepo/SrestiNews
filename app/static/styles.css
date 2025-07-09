@@ -1,0 +1,182 @@
+/* static/css/style.css - Advanced Version with Dark Mode */
+
+/* === CSS VARIABLES === */
+:root {
+  --bg-light: #f5f7fa;
+  --bg-dark: #121212;
+  --text-light: #333;
+  --text-dark: #f1f1f1;
+  --card-bg-light: #ffffff;
+  --card-bg-dark: #1e1e1e;
+  --primary: #0d6efd;
+  --primary-dark: #084298;
+  --navbar-bg-light: #ffffff;
+  --navbar-bg-dark: #1f1f1f;
+  --border-color-light: #dee2e6;
+  --border-color-dark: #333;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-light);
+  line-height: 1.6;
+  transition: all 0.3s ease-in-out;
+}
+
+body.dark-mode {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* === GLOBAL RESET === */
+a {
+  text-decoration: none;
+  color: var(--primary);
+  transition: 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* === NAVBAR === */
+.navbar {
+  background: var(--navbar-bg-light) !important;
+  border-bottom: 1px solid var(--border-color-light);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+body.dark-mode .navbar {
+  background: var(--navbar-bg-dark) !important;
+  border-bottom: 1px solid var(--border-color-dark);
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: var(--primary) !important;
+}
+
+/* === CARDS === */
+.card {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card-bg-light);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+body.dark-mode .card {
+  background: var(--card-bg-dark);
+  box-shadow: 0 8px 18px rgba(255, 255, 255, 0.05);
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* === BUTTONS === */
+.btn {
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+/* === DASHBOARD TABLE === */
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.table .btn-sm {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}
+
+/* === FORM STYLES === */
+form .form-control, form .form-select {
+  border-radius: 6px;
+  box-shadow: none !important;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  color: #000;
+}
+
+body.dark-mode form .form-control, 
+body.dark-mode form .form-select {
+  background-color: #2b2b2b;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+form .form-control:focus, form .form-select:focus {
+  border-color: var(--primary);
+}
+
+/* === FLASH MESSAGE === */
+.alert {
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+/* === FOOTER === */
+footer {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #e9ecef;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+body.dark-mode footer {
+  background: #1f1f1f;
+  color: #bbb;
+}
+
+/* === DARK MODE TOGGLE (Optional Button) === */
+.dark-toggle {
+  position: fixed;
+  top: 10px;
+  right: 15px;
+  z-index: 999;
+  background-color: var(--primary);
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* === JavaScript to Enable Toggle === */
+/* Add this to your base HTML file:
+<script>
+  const toggle = document.createElement('button');
+  toggle.innerText = '🌙';
+  toggle.className = 'dark-toggle';
+  toggle.onclick = () => document.body.classList.toggle('dark-mode');
+  document.body.appendChild(toggle);
+</script>
+*/
