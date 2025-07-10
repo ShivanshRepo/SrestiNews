@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash
 app = create_app()
 
 # ✅ Secure environment fallback
-DEFAULT_ADMIN_USERNAME = "secure_admin2"
+DEFAULT_ADMIN_USERNAME = "Sresti_@345!_News234"
 DEFAULT_ADMIN_PASSWORD = "ChangeThis@123!"
 
 # ✅ Get credentials from environment variables

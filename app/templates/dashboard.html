@@ -11,6 +11,7 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand text-primary fw-bold ms-3" href="/">📰 Sresti.News</a>
@@ -28,33 +29,35 @@
             <button class="btn btn-outline-primary" type="submit">🔍</button>
           </form>
         </li>
-        <li class="nav-item">
-  <a class="nav-link text-danger" href="{{ url_for('main.reset_password') }}">🔐 Reset Password</a>
-</li>
+        <li class="nav-item dropdown ms-2">
+          <a class="nav-link dropdown-toggle text-primary" href="#" role="button" data-bs-toggle="dropdown">
+            ⚙️ Admin
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{{ url_for('main.edit_admin') }}">✏️ Edit Admin Info</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('main.reset_password') }}">🔐 Reset Password</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="{{ url_for('main.logout') }}">🚪 Logout</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 
-
 <!-- Main Container -->
 <div class="container mt-5">
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
     <div>
       <h2 class="fw-bold">📋 Admin Dashboard</h2>
       <p class="text-muted mb-0">Welcome, <strong>{{ current_user.username }}</strong></p>
     </div>
-    <div>
-      <a href="/admin/logout" class="btn btn-outline-danger">🚪 Logout</a>
+    <div class="d-flex flex-wrap gap-2 mt-2">
+      <a href="/admin/news/add" class="btn btn-success">➕ Add News</a>
     </div>
   </div>
 
-  <!-- Action Buttons -->
-  <div class="mb-3 text-end">
-    <a href="/admin/news/add" class="btn btn-success me-2">➕ Add News</a>
-  </div>
-
-  <!-- Flash Message -->
+  <!-- Flash Messages -->
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -65,14 +68,15 @@
   {% endwith %}
 
   <!-- News Table -->
-  <div class="table-responsive">
+  <div class="table-responsive mb-5">
+    <h4 class="fw-semibold mb-3">📰 News List</h4>
     <table class="table table-bordered table-hover align-middle shadow-sm">
       <thead class="table-light text-center">
         <tr>
-          <th scope="col">📰 Title</th>
-          <th scope="col">📂 Category</th>
-          <th scope="col">📅 Date</th>
-          <th scope="col" style="width: 180px;">⚙️ Actions</th>
+          <th>📰 Title</th>
+          <th>📂 Category</th>
+          <th>📅 Date</th>
+          <th style="width: 180px;">⚙️ Actions</th>
         </tr>
       </thead>
       <tbody>

@@ -1,4 +1,4 @@
-/* static/css/style.css - Advanced Version with Dark Mode */
+/* static/css/style.css - Advanced Version with Dark Mode and Responsive Admin Panel */
 
 /* === CSS VARIABLES === */
 :root {
@@ -22,6 +22,8 @@ body {
   color: var(--text-light);
   line-height: 1.6;
   transition: all 0.3s ease-in-out;
+  margin: 0;
+  padding: 0;
 }
 
 body.dark-mode {
@@ -170,8 +172,42 @@ body.dark-mode footer {
   cursor: pointer;
 }
 
-/* === JavaScript to Enable Toggle === */
-/* Add this to your base HTML file:
+/* === MEDIA QUERIES FOR RESPONSIVENESS === */
+.container, .card, .form-control, .table {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+}
+
+/* === PROFILE FORM CUSTOM === */
+.profile-form {
+  max-width: 500px;
+  margin: auto;
+  padding: 1.5rem;
+  background: var(--card-bg-light);
+  border-radius: 12px;
+}
+
+body.dark-mode .profile-form {
+  background: var(--card-bg-dark);
+}
+
+/* === DARK MODE TOGGLE SCRIPT EXAMPLE === */
+/* Paste into base template:
 <script>
   const toggle = document.createElement('button');
   toggle.innerText = '🌙';
@@ -180,3 +216,9 @@ body.dark-mode footer {
   document.body.appendChild(toggle);
 </script>
 */
+.news-content {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  white-space: pre-line;
+  word-break: break-word;
+}

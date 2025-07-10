@@ -198,3 +198,35 @@ def search():
 
     return render_template('home.html', news_list=news_list, video_list=video_list, categories=categories)
 
+# Add this at the top
+from flask import render_template, redirect, url_for, request, flash
+from flask_login import login_required, current_user
+from app import db
+from app.models import User  # Your Admin model
+
+# Route to edit admin name
+# ✅ ROUTE: Edit Admin Username (and Name)
+@main.route('/admin/edit-admin', methods=['GET', 'POST'])
+@login_required
+def edit_admin():
+    if request.method == 'POST':
+        new_name = request.form.get('name')
+        new_username = request.form.get('username')
+
+        # Check if new username is already taken by another user
+        if new_username and new_username != current_user.username:
+            existing_user = User.query.filter_by(username=new_username).first()
+            if existing_user:
+                flash('❌ Username already taken. Please choose a different one.', 'danger')
+                return render_template('edit_admin.html', admin=current_user)
+
+        # Update fields
+        current_user.name = new_name
+        current_user.username = new_username
+        db.session.commit()
+
+        flash('✅ Admin name and username updated successfully! Please login again.', 'success')
+        logout_user()  # Force logout after username change
+        return redirect(url_for('main.login'))
+
+    return render_template('edit_admin.html', admin=current_user)
