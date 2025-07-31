@@ -231,16 +231,6 @@ def edit_admin():
 
     return render_template('edit_admin.html', admin=current_user)
 
-@main.route('/initdb')
-def initdb():
-    from app import db
-    db.create_all()
-    return '✅ Tables created in database!'
-
-@main.route("/db_check")
-def db_check():
-    from app import db
-    return f"Connected to: {db.engine.url}"
 
 @main.route("/check_admin")
 def check_admin():
