@@ -6,3 +6,4 @@ Werkzeug==2.3.7
 gunicorn
 cloudinary
 python-dotenv
+psycopg2-binary
