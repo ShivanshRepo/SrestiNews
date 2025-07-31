@@ -241,3 +241,13 @@ def initdb():
 def db_check():
     from app import db
     return f"Connected to: {db.engine.url}"
+
+@main.route("/check_admin")
+def check_admin():
+    from app.models import User
+    user = User.query.first()
+    if user:
+        return f"Admin user found: {user.username}"
+    else:
+        return "No admin user found"
+
