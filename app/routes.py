@@ -230,3 +230,10 @@ def edit_admin():
         return redirect(url_for('main.login'))
 
     return render_template('edit_admin.html', admin=current_user)
+
+@main.route('/initdb')
+def initdb():
+    from app import db
+    db.create_all()
+    return '✅ Tables created in database!'
+
