@@ -31,6 +31,6 @@ app.register_blueprint(main_blueprint)
 
 login_manager.login_view = 'main.login'
 
-from app.routes.init import init_routes
+from app.routes import init_routes
 app.register_blueprint(init_routes)
 
