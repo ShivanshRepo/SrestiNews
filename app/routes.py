@@ -251,3 +251,16 @@ def check_admin():
     else:
         return "No admin user found"
 
+@app.route("/initdb")
+def init_db_web():
+    from app.models import User
+    from werkzeug.security import generate_password_hash
+
+    username = "Sresti_@345!_News234"
+    password = generate_password_hash("ChangeThis@123!")
+    if not User.query.filter_by(username=username).first():
+        admin = User(username=username, password=password)
+        db.session.add(admin)
+        db.session.commit()
+        return "Admin created"
+    return "Admin already exists"
