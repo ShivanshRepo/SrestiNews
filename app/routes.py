@@ -237,3 +237,7 @@ def initdb():
     db.create_all()
     return '✅ Tables created in database!'
 
+@main.route("/db_check")
+def db_check():
+    from app import db
+    return f"Connected to: {db.engine.url}"
